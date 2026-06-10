@@ -20,13 +20,13 @@ export async function signup({ fullName, email, password }) {
 }
 
 export async function login({ email, password }) {
-  let { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
   if (error) throw new Error(error.message);
-
+  console.log(data);
   return data;
 }
 
@@ -63,7 +63,7 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
   // 2) if avatar exist , upload it
   // create unique file name
   const fileName = `avatar-${data.user.id}-${Math.trunc(
-    Math.random() * 10000000000 + 1
+    Math.random() * 10000000000 + 1,
   )}`;
   // upload the file itself
   const { error: storageError } = await supabase.storage
